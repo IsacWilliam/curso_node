@@ -4,11 +4,15 @@
   "description": "",
   "main": "teste.js",
   "scripts": {
-    "start": "node app.js" 
+    "dev": "npx nodemon app.js",
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
