@@ -6,17 +6,12 @@ app.get("/", function(req, res){
     res.send("Hello World!")
 });
 
-app.get("/user", function(req, res){
+app.get("/user/:nome", function(req, res){
     res.send({
-        nome: "Isac"
+        nome: req.params.nome
     })
 });
 
-app.delete("/user", function(req, res){
-    res.send({
-        nome: "Isac ação DELETE"
-    })
-});
 
 app.listen(8080, function(){
     console.log("Servidor rodando")
