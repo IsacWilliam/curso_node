@@ -11,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "@prisma/client": "^5.12.1",
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "prisma": "^5.12.1"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
