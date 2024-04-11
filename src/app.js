@@ -1,7 +1,10 @@
 import express from 'express';
 import { routerLoader } from './routerLoader.js';
+import e from 'express';
 
 const app = express();
+
+app.use(express.json());
 
 routerLoader(app);
 
