@@ -2,17 +2,22 @@ import { PrismaClient } from '@prisma/client';
 import { UserModel } from './user.model';
 import { UserInsertDTO } from './dtos/user-insert.dto';
 import { NotFoundException } from '@exceptions/not-found-exception';
+import { InternalServerErrorException } from '@exceptions/internal-server-error-exception';
 
 const prisma = new PrismaClient();
 
 export const getUsers = async (): Promise<UserModel[]> =>{
     const users = await prisma.user.findMany();
 
-    if(users?.length ===0){
+    /*if(users?.length === 0){
+        throw new InternalServerErrorException('DEU ERRO AQUI')
+    }*/
+
+    if(users?.length === 0){
         throw new NotFoundException('User');
     }
 
-    return prisma.user.findMany();
+    return users;
 };
 
 export const createUser = async (body: UserInsertDTO): Promise<UserModel> =>{
