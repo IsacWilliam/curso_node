@@ -4,6 +4,8 @@ import { UserInsertDTO } from "./dtos/user-insert.dto";
 
 const userRouter = Router();
 
+userRouter.use('/user', userRouter);
+
 userRouter.get('/', async (_, res: Response): Promise<void> =>{
     const users = await getUsers();
     res.json(users);
