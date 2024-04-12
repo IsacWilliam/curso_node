@@ -4,8 +4,9 @@
   "description": "",
   "main": "teste.ts",
   "scripts": {
-    "devV1": "npx nodemon src/app.ts",
-    "dev": "npx ts-node-dev --respawn --inspect --ignore-watch node_modules src/app.ts",
+    "dev1": "npx nodemon src/app.ts",
+    "dev2": "npx ts-node-dev --respawn --inspect --ignore-watch node_modules src/app.ts",
+    "dev3": "npx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
     "start": "node src/app.ts"
   },
   "author": "",
@@ -25,6 +26,7 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   }
 }
