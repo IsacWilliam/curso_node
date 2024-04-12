@@ -11,5 +11,6 @@ export const getUsers = async (): Promise<UserModel[]> =>{
 export const createUser = async (body: UserInsertDTO): Promise<UserModel> =>{
     //console.log('body: ', body);
     return prisma.user.create({
-        data: body});
+        data: body
+    });
 };

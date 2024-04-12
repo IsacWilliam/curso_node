@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
+import { Express } from 'express-serve-static-core';
 
-export const routerLoader = (app) => {
+export const routerLoader = (app: Express): void => {
     
     const modulesPath = path.join(__dirname, 'modules');
     

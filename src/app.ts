@@ -1,6 +1,5 @@
 import express from 'express';
 import { routerLoader } from './routerLoader';
-import e from 'express';
 
 const app = express();
 
@@ -8,7 +7,7 @@ app.use(express.json());
 
 routerLoader(app);
 
-app.listen(8080, function(){
+app.listen(8080, (): void  => {
     console.log("Servidor rodando")
 })
 
