@@ -1,12 +1,10 @@
-import { Router } from "express";
+import { Response, Router } from "express";
 
 const productRouter = Router();
 
-const router = Router();
+productRouter.use('/product', productRouter);
 
-productRouter.use('/product', router);
-
-router.get('/', function(req, res){
+productRouter.get('/', (_, res: Response): void => {
     res.send('Produto');
 });
 
