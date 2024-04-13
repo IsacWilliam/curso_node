@@ -8,11 +8,7 @@ const prisma = new PrismaClient();
 
 export const getUsers = async (): Promise<UserModel[]> =>{
     const users = await prisma.user.findMany();
-
-    /*if(users?.length === 0){
-        throw new InternalServerErrorException('DEU ERRO AQUI')
-    }*/
-
+    
     if(users?.length === 0){
         throw new NotFoundException('User');
     }
