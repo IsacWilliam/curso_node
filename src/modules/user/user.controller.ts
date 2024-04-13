@@ -30,7 +30,9 @@ userRouter.post('/', async (req: Request<undefined, undefined, UserInsertDTO>, r
         phone: req.body.phone
         // Adicione outras propriedades conforme necessário
     };
-    const user = await createUser(userData);
+    const user = await createUser(userData).catch((error) => {
+        new ReturnError(res, error);
+    });
     res.json(user);
 });
 
