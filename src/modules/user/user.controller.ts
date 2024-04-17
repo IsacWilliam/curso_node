@@ -4,28 +4,13 @@ import { UserInsertDTO } from "./dtos/user-insert.dto";
 import { NotFoundException } from "@exceptions/not-found-exception";
 import { ReturnError } from "@exceptions/dtos/return-error.dto";
 import { verifyToken } from "@utils/auth";
+import { authMiddleware } from "src/middlewares/auth.middleware";
 
 const userRouter = Router();
 
+//const router = Router();
+
 userRouter.use('/user', userRouter);
-
-userRouter.get('/', async (req: Request, res: Response): Promise<void> =>{
-    const authorization = req.headers.authorization;
-    
-    verifyToken(authorization).catch((error) => {
-        new ReturnError(res, error);
-    });
-
-    const users = await getUsers().catch((error) => {
-        if(error instanceof NotFoundException){
-            res.status(204);
-        }else{
-            new ReturnError(res, error);
-        }
-    });
-
-    res.json(users);
-});
 
 userRouter.post('/', async (req: Request<undefined, undefined, UserInsertDTO>, res: Response): Promise<void> =>{
     const userData: UserInsertDTO = {
@@ -41,6 +26,22 @@ userRouter.post('/', async (req: Request<undefined, undefined, UserInsertDTO>, r
         new ReturnError(res, error);
     });
     res.json(user);
+});
+
+//O que estiver ANTES do MIDDLEWARE não será processado por ele.
+userRouter.use(authMiddleware);
+
+userRouter.get('/', async (req: Request, res: Response): Promise<void> =>{
+    
+    const users = await getUsers().catch((error) => {
+        if(error instanceof NotFoundException){
+            res.status(204);
+        }else{
+            new ReturnError(res, error);
+        }
+    });
+
+    res.json(users);
 });
 
 export default userRouter;
