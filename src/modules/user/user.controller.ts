@@ -3,16 +3,9 @@ import { createUser, getUsers } from "./user.service";
 import { UserInsertDTO } from "./dtos/user-insert.dto";
 import { NotFoundException } from "@exceptions/not-found-exception";
 import { ReturnError } from "@exceptions/dtos/return-error.dto";
-import { verifyToken } from "@utils/auth";
 import { authMiddleware } from "src/middlewares/auth.middleware";
 
-const userRouter = Router();
-
-//const router = Router();
-
-userRouter.use('/user', userRouter);
-
-userRouter.post('/', async (req: Request<undefined, undefined, UserInsertDTO>, res: Response): Promise<void> =>{
+const createUserController = async (req: Request<undefined, undefined, UserInsertDTO>, res: Response): Promise<void> =>{
     const userData: UserInsertDTO = {
         cpf: req.body.cpf,
         name: req.body.name,
@@ -26,12 +19,9 @@ userRouter.post('/', async (req: Request<undefined, undefined, UserInsertDTO>, r
         new ReturnError(res, error);
     });
     res.json(user);
-});
+};
 
-//O que estiver ANTES do MIDDLEWARE não será processado por ele.
-userRouter.use(authMiddleware);
-
-userRouter.get('/', async (req: Request, res: Response): Promise<void> =>{
+const getUsersController = async (req: Request, res: Response): Promise<void> =>{
     
     const users = await getUsers().catch((error) => {
         if(error instanceof NotFoundException){
@@ -42,6 +32,16 @@ userRouter.get('/', async (req: Request, res: Response): Promise<void> =>{
     });
 
     res.json(users);
-});
+};
+
+const userRouter = Router();
+userRouter.use('/user', userRouter);
+
+userRouter.post('/', createUserController);
+
+//O que estiver ANTES do MIDDLEWARE não será processado por ele.
+userRouter.use(authMiddleware);
+
+userRouter.get('/', getUsersController);
 
 export default userRouter;

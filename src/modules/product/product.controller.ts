@@ -1,11 +1,12 @@
 import { Response, Router } from "express";
 
-const productRouter = Router();
+const getProduct = (_, res: Response): void => {
+    res.send('Produto');
+};
 
+const productRouter = Router();
 productRouter.use('/product', productRouter);
 
-productRouter.get('/', (_, res: Response): void => {
-    res.send('Produto');
-});
+productRouter.get('/', getProduct);
 
 export default productRouter;
