@@ -1,10 +1,13 @@
 import { Request, Response, Router } from "express";
-import { createUser, getUsers } from "./user.service";
+import { createUser, editPassword, getUsers } from "./user.service";
 import { UserInsertDTO } from "./dtos/user-insert.dto";
 import { NotFoundException } from "@exceptions/not-found-exception";
 import { ReturnError } from "@exceptions/dtos/return-error.dto";
 //import { authMiddleware } from "src/middlewares/auth.middleware";
 import { authAdminMiddleware } from "src/middlewares/auth-admin.middleware";
+import { UserModel } from "./user.model";
+import { authMiddleware } from "src/middlewares/auth.middleware";
+import { UserEditPasswordDTO } from "./dtos/user-edit-password.dto";
 
 const createUserController = async (req: Request<undefined, undefined, UserInsertDTO>, res: Response): Promise<void> =>{
     const userData: UserInsertDTO = {
@@ -35,15 +38,26 @@ const getUsersController = async (req: Request, res: Response): Promise<void> =>
     res.json(users);
 };
 
+const editPasswordController = async (req: Request<undefined, undefined, UserEditPasswordDTO>, res: Response): Promise<void> => {
+    const user = await editPassword(11, req.body).catch((error) => {
+        new ReturnError(res, error);
+    });
+
+    res.send(user);
+};
+
+//Cria o endpoint
 const userRouter = Router();
 userRouter.use('/user', userRouter);
 
 userRouter.post('/', createUserController);
 
-//O que estiver ANTES do MIDDLEWARE não será processado por ele.
-//userRouter.use(authMiddleware);
-userRouter.use(authAdminMiddleware);
+//Altera a senha somente se estiver logado
+userRouter.use(authMiddleware);  /*O que estiver ANTES do MIDDLEWARE não será processado por ele.*/
+userRouter.patch('/', editPasswordController);
 
+//Somente ADMIN tem acesso aos dados cadastrados no BD
+userRouter.use(authAdminMiddleware);
 userRouter.get('/', getUsersController);
 
 export default userRouter;
