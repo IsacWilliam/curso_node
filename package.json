@@ -6,8 +6,10 @@
   "scripts": {
     "dev1": "npx nodemon src/app.ts",
     "dev2": "npx ts-node-dev --respawn --inspect --ignore-watch node_modules src/app.ts",
-    "dev3": "npx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
-    "start": "node src/app.ts"
+    "dev": "npx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
+    "start": "node src/app.ts",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migration": "npx prisma migrate dev"
   },
   "author": "",
   "license": "ISC",
