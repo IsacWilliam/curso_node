@@ -2,6 +2,7 @@ import { UnauthorizedException } from "@exceptions/unauthorized-exception";
 import { UserAuth } from "@modules/auth/dtos/user-auth.dto";
 import { UserModel } from "@modules/user/user.model";
 import { sign, verify } from "jsonwebtoken";
+import { Request } from "express";
 
 export const PASSWORD_JWT = 'senha';
 
@@ -35,3 +36,9 @@ export const verifyToken = async (authorization?: string): Promise<UserAuth> => 
         throw new UnauthorizedException();
     }    
 };
+
+export const getUserByToken =async (req:Request): Promise<UserAuth> => {
+    const authorization = req.headers.authorization;
+
+    return verifyToken(authorization);
+}
